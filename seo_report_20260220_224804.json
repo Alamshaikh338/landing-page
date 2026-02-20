@@ -1,0 +1,30 @@
+{
+  "url": "https://outreachdeskpro.com/",
+  "timestamp": "2026-02-20T22:48:04.966155",
+  "metrics": {
+    "title": {
+      "text": "OutreachDeskPro | Premium White-Label Link Building Agency",
+      "length": 58,
+      "status": "OK"
+    },
+    "description": {
+      "text": "Secure high-quality editorial backlinks on real traffic sites. OutreachDeskPro helps agencies scale manual outreach with zero spam. View our inventory today.",
+      "length": 157,
+      "status": "OK"
+    },
+    "headings": {
+      "h1": 4,
+      "h2": 16,
+      "h3": 21,
+      "h4": 3,
+      "h5": 0,
+      "h6": 0
+    },
+    "images": {
+      "total": 6,
+      "missing_alt": 0,
+      "missing_alt_sources": []
+    }
+  },
+  "score": 90
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Analyzer | AS.Develops</title>
+    <link rel="stylesheet" href="frontend/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .analyzer-card {
+            background: var(--glass);
+            padding: 3rem;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .result-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-ok {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+        }
+
+        .status-warning {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">AS.Develops</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#services">Services</a>
+            <a href="/seo-analyzer">SEO Tool</a>
+            <a href="/#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero" style="min-height: auto; padding-bottom: 50px;">
+        <h1 class="fade-up visible">SEO <span style="color: var(--primary);">Analyzer</span></h1>
+        <p class="fade-up visible">Get an instant audit of any website's technical SEO performance.</p>
+
+        <div class="analyzer-card fade-up visible">
+            <div class="form-group" style="display: flex; gap: 1rem;">
+                <input type="text" id="urlInput" placeholder="https://example.com" style="flex: 1;">
+                <button id="analyzeBtn" class="btn btn-primary">Analyze Now</button>
+            </div>
+            <div id="loader" style="display: none; text-align: center; margin: 2rem 0;">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p>Analyzing technical metrics...</p>
+            </div>
+            <div id="results" style="display: none; margin-top: 2rem; text-align: left;">
+                <div class="score-display">Score: <span id="scoreVal">0</span>/100</div>
+
+                <div class="result-item">
+                    <span>Page Title</span>
+                    <span id="titleStatus" class="status-badge">OK</span>
+                </div>
+                <div class="result-item">
+                    <span>Meta Description</span>
+                    <span id="descStatus" class="status-badge">OK</span>
+                </div>
+                <div class="result-item">
+                    <span>H1 Heading</span>
+                    <span id="h1Status" class="status-badge">OK</span>
+                </div>
+                <div class="result-item">
+                    <span>Image Alt Texts</span>
+                    <span id="imgStatus" class="status-badge">OK</span>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h4>Technical Breakdown:</h4>
+                    <pre id="jsonOutput"
+                        style="background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 12px; font-size: 0.8rem; overflow-x: auto; margin-top: 0.5rem;"></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('analyzeBtn').addEventListener('click', async () => {
+            const url = document.getElementById('urlInput').value;
+            if (!url) return alert('Please enter a URL');
+
+            const btn = document.getElementById('analyzeBtn');
+            const loader = document.getElementById('loader');
+            const results = document.getElementById('results');
+
+            btn.disabled = true;
+            loader.style.display = 'block';
+            results.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+
+                const res = await response.json();
+                if (res.success) {
+                    const data = res.data;
+                    document.getElementById('scoreVal').innerText = data.score;
+
+                    const updateStatus = (id, status) => {
+                        const el = document.getElementById(id);
+                        el.innerText = status;
+                        el.className = 'status-badge ' + (status === 'OK' ? 'status-ok' : 'status-warning');
+                    };
+
+                    updateStatus('titleStatus', data.metrics.title.status);
+                    updateStatus('descStatus', data.metrics.description.status);
+                    updateStatus('h1Status', data.metrics.headings.h1 === 1 ? 'OK' : 'Issue');
+                    updateStatus('imgStatus', data.metrics.images.missing_alt === 0 ? 'OK' : data.metrics.images.missing_alt + ' Missing');
+
+                    document.getElementById('jsonOutput').innerText = JSON.stringify(data, null, 2);
+                    results.style.display = 'block';
+                } else {
+                    alert('Error: ' + res.error);
+                }
+            } catch (err) {
+                alert('Analysis failed: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

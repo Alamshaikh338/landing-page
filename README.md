@@ -44,7 +44,7 @@ The application will be available at `http://127.0.0.1:5000`.
 ## 🔍 SEO Analyzer
 Run the SEO audit tool from the command line:
 ```bash
-python automation/seo/analyzer.py --url https://your-site.com --export
+python automation/seo/analyzer.py --url https://outreachdeskpro.com/ --export
 ```
 
 ## 📄 License

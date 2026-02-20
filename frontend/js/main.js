@@ -10,18 +10,36 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                
+
                 // Trigger counter if visible
                 if (entry.target.querySelector('.counter')) {
                     startCounters(entry.target);
                 }
+                // Once visible, we can stop observing
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('.fade-up').forEach(el => {
+    const animatedElements = document.querySelectorAll('.fade-up');
+    console.log(`Found ${animatedElements.length} elements to animate`);
+
+    animatedElements.forEach(el => {
         observer.observe(el);
+        // Fallback: If it's already in view (some browsers might be slow with observer)
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            el.classList.add('visible');
+        }
     });
+
+    // Global fail-safe: Show all after 3 seconds if not visible
+    setTimeout(() => {
+        document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+            el.classList.add('visible');
+            console.warn('Animation fallback triggered for:', el);
+        });
+    }, 3000);
 
     // Counter Animation
     function startCounters(container) {
@@ -60,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
