@@ -100,6 +100,11 @@ Services:
       - Facebook Automation
       - LinkedIn Outreach
       - Email Sequences
+  - Data Services:
+      - Google Maps Scraping
+      - B2B Lead Generation
+      - Data Entry & CRM Management
+      - Custom Web Data Scraping
 ```
 
 #### 3.1.3 Contact Form
