@@ -1,45 +1,51 @@
-# Landing Page Project
+# Professional Landing Page (Python & SEO)
 
-## Overview
-This repository contains the source code for a landing page project designed to showcase the features and capabilities of our product.
+Enterprise-grade portfolio website showcasing Python automation, SEO expertise, and digital marketing services.
 
-## Features
-- **Responsive Design:** The landing page is optimized for various screen sizes including desktops, tablets, and mobile phones.
-- **Interactive Elements:** Includes interactive components that engage users and enhance user experience.
-- **Fast Loading:** The page is optimized for speed to ensure quick loading times.
-- **SEO Optimized:** Incorporates best practices for search engine optimization.
+## 🚀 Quick Start
 
-## Installation
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Alamshaikh338/landing-page.git
-   ```
-2. Navigate to the project directory:
-   ```sh
-   cd landing-page
-   ```
-3. Install dependencies:
-   ```sh
-   npm install
-   ```
+### 1. Prerequisites
+- Python 3.8+
+- pip
 
-## Deployment
-To deploy the landing page:
-1. Build the project:
-   ```sh
-   npm run build
-   ```
-2. Serve the built files using any static site hosting service such as GitHub Pages, Netlify, or Vercel.
-   
-For example, to deploy using GitHub Pages:
-1. Push your code to the `gh-pages` branch.
-2. Enable GitHub Pages in repository settings.
+### 2. Installation
+```bash
+# Clone the repository
+git clone https://github.com/Alamshaikh338/landing-page.git
+cd landing-page
 
-## License
-This project is licensed under the MIT License.
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-## Author
-Alamshaikh338
+# Install dependencies
+pip install -r requirements.txt
+```
 
-## Date
-Document created on: 2025-12-01 17:41:56 (UTC)
+### 3. Running the Application
+```bash
+python backend/app.py
+```
+The application will be available at `http://127.0.0.1:5000`.
+
+## 📁 Project Structure
+- `index.html`: Main landing page
+- `frontend/`: CSS, JS, and Assets
+- `backend/`: Flask API and server logic
+- `automation/`: Python SEO analyzer and other scripts
+- `data/`: Local JSON storage for form submissions
+
+## 🛠️ Features
+- **Modern UI**: Dark mode, glassmorphism, and responsive design.
+- **Python Backend**: Robust Flask API for handling contact forms.
+- **SEO Tool**: Built-in script for analyzing website SEO performance.
+- **Performance**: Optimized for < 2s load times.
+
+## 🔍 SEO Analyzer
+Run the SEO audit tool from the command line:
+```bash
+python automation/seo/analyzer.py --url https://your-site.com --export
+```
+
+## 📄 License
+MIT License. Created by [Alam Shaikh](https://github.com/Alamshaikh338).
